@@ -7,7 +7,7 @@ import numpy as np
 
 
 
-class dataset(Dataset):
+class dataset_ad(Dataset):
     def __init__(self, dataset, transform=None):
         self.dataset = dataset
         self.transform = transform
@@ -23,8 +23,29 @@ class dataset(Dataset):
         return data
 
 
-def train_test_split(data, batch_size=100, val_size=0.35):
-    dataset_train = dataset(data)
+class dataset_class(Dataset):
+    def __init__(self, dataset,labels):
+        self.dataset = dataset
+        self.labels = labels
+        self.sensor_num = dataset.shape[1]
+        self.time_steps = dataset.shape[2]
+    def __len__(self):
+        return len(self.dataset)
+    def __getitem__(self, idx):
+        if torch.is_tensor(idx):
+            idx = idx.tolist()
+        data = self.dataset[idx,:,:].astype('float32')
+        data = torch.from_numpy(data)
+        label = self.labels[idx]
+        label = torch.tensor(label).long()
+        return data,label
+
+
+def train_test_split(data,labels=None,batch_size=100, val_size=0.35):
+    if np.any(labels == None)==True:
+        dataset_train = dataset_ad(data)
+    else:
+        dataset_train = dataset_class(data,labels)
     valid_size = 0.35
     num_train = len(dataset_train)
     indices = list(range(num_train))

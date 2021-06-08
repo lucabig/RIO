@@ -145,7 +145,7 @@ def chunking(norm_data,stride=5,chunk_size=20,sensors=len(m_subset)):
             train_norm_data=np.concatenate([train_norm_data,np.expand_dims(norm_data.T.iloc[:,cnt:cnt+chunk_size].values,0)])
             cnt+=stride
             if cnt%1000==0:
-                print(cnt/n)
+                print('Processed', cnt/n*100, 'percent of the dataset')
         except ValueError:
             break
     return train_norm_data[1:,:,:]
