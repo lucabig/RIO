@@ -45,12 +45,12 @@ def train_ad(train_loader, valid_loader,n_epochs=500):
             print('Validation loss decreased ({:.6f} --> {:.6f}).  Saving model ...'.format(
             valid_loss_min,
             valid_loss))
-            torch.save(model.state_dict(), 'C://Users//lbg//OneDrive - CSEM S.A//Bureau//RIO_Data_Challenge//New_Model//Weights//CNNAE_May.pt')
+            torch.save(model.state_dict(), 'C://Users//RIO//Desktop//RIO_LUCA//June21//RIO//weights//CNNAE_May.pt')
             valid_loss_min = valid_loss
     return model
 
 def test_ad(model, dataset_train, dataset_test,train_idx,valid_idx):
-    model.load_state_dict(torch.load('C://Users//lbg//OneDrive - CSEM S.A//Bureau//RIO_Data_Challenge//New_Model//Weights//CNNAE_May.pt'))
+    model.load_state_dict(torch.load('C://Users//RIO//Desktop//RIO_LUCA//June21//RIO//weights//CNNAE_May.pt'))
     ### val data 
     print('validation scores..')
     model.eval()
@@ -140,7 +140,7 @@ def train_class(train_loader, valid_loader,n_epochs=500):
             print('Validation loss decreased ({:.6f} --> {:.6f}).  Saving model ...'.format(
             valid_loss_min,
             valid_loss))
-            torch.save(model.state_dict(), 'C://Users//lbg//OneDrive - CSEM S.A//Bureau//RIO_Data_Challenge//New_Model//Weights//ResNet_May.pt')
+            torch.save(model.state_dict(), 'C://Users//RIO//Desktop//RIO_LUCA//June21//RIO//weights//ResNet_May.pt')
             valid_loss_min = valid_loss
     return model
 
@@ -165,33 +165,33 @@ def conf_matrix(model,data_loader,nb_classes = 9):
     plt.show()
 
 if __name__ == "__main__":
- #   my_dict = create_datasets_ad(class_f=2,stride=5,chunk_size=10,scale='minmax',b=100)
- #   train_loader=my_dict['train_chunked'][1]
- #   valid_loader=my_dict['train_chunked'][2]
- #   train_idx=my_dict['train_chunked'][3]
- #   valid_idx=my_dict['train_chunked'][4]
- #   dataset_train=my_dict['train_chunked'][0]
- #   dataset_test=my_dict['test_chunked'][0]
- #   scalers=my_dict['scaler']
- #   model = ConvAutoencoder()
- #   import pdb
- #   pdb.set_trace()
- #   #model = train_ad(train_loader,valid_loader,train_idx,valid_idx,n_epochs=1000)
- #   quants = test_ad(model, dataset_train, dataset_test,train_idx,valid_idx)
-#
-#    with open("C://Users//lbg//OneDrive - CSEM S.A//Bureau//RIO_Data_Challenge//New_Model//scalers/scalers", "wb") as fp:   #Pickling
-#        pickle.dump(scalers, fp)
-#
-#    with open("C://Users//lbg//OneDrive - CSEM S.A//Bureau//RIO_Data_Challenge//New_Model//quants/quants", "wb") as fp:   #Pickling
-#        pickle.dump(quants, fp)
-    my_dict = create_datasets_class(stride=2,chunk_size=10,scale='minmax',b=100)
+    my_dict = create_datasets_ad(class_f=2,stride=2,chunk_size=10,scale='minmax',b=100)
     train_loader=my_dict['train_chunked'][1]
     valid_loader=my_dict['train_chunked'][2]
     train_idx=my_dict['train_chunked'][3]
     valid_idx=my_dict['train_chunked'][4]
-    #model = train_class(train_loader, valid_loader,n_epochs=20)
-    model = ResNet(21,9)
-    model.load_state_dict(torch.load('C://Users//lbg//OneDrive - CSEM S.A//Bureau//RIO_Data_Challenge//New_Model//Weights//ResNet_May.pt'))
-    conf_matrix(model,valid_loader)
-    conf_matrix(model,train_loader)
+    dataset_train=my_dict['train_chunked'][0]
+    dataset_test=my_dict['test_chunked'][0]
+    scalers=my_dict['scaler']
+ #   model = ConvAutoencoder()
+ #   import pdb
+ #   pdb.set_trace()
+    model = train_ad(train_loader, valid_loader,n_epochs=1000)
+    quants = test_ad(model, dataset_train, dataset_test,train_idx,valid_idx)
+#
+    with open("C://Users//RIO//Desktop//RIO_LUCA//June21//RIO//scalers//scalers", "wb") as fp:   #Pickling
+        pickle.dump(scalers, fp)
+#
+    with open("C://Users//RIO//Desktop//RIO_LUCA//June21//RIO//quants//quants", "wb") as fp:   #Pickling
+        pickle.dump(quants, fp)
+#    my_dict = create_datasets_class(stride=2,chunk_size=10,scale='minmax',b=100)
+#    train_loader=my_dict['train_chunked'][1]
+#    valid_loader=my_dict['train_chunked'][2]
+#    train_idx=my_dict['train_chunked'][3]
+#    valid_idx=my_dict['train_chunked'][4]
+#    model = train_class(train_loader, valid_loader,n_epochs=20)
+    #model = ResNet(21,9)
+    #model.load_state_dict(torch.load('C://Users//RIO//Desktop//RIO_LUCA//June21//RIO//weights//ResNet_May.pt'))
+#    conf_matrix(model,valid_loader)
+#    conf_matrix(model,train_loader)
 

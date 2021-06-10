@@ -25,7 +25,7 @@ def read_full_data():
     print('Loading full dataset')
     DATA = defaultdict()
     for c in classes:
-        base_path = 'C://Users//lbg//OneDrive - CSEM S.A//Bureau//RIO_Data_Challenge//src//data//'
+        base_path = 'C://Users//RIO//Desktop//RIO_LUCA//June21//DATA//DATA//'
         paths = ['release1dev//','release2dev//','testdev//']
         full_data_t = []
         for p in paths:
