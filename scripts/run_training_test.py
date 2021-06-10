@@ -189,7 +189,9 @@ if __name__ == "__main__":
     valid_loader=my_dict['train_chunked'][2]
     train_idx=my_dict['train_chunked'][3]
     valid_idx=my_dict['train_chunked'][4]
-    model = train_class(train_loader, valid_loader,n_epochs=20)
+    #model = train_class(train_loader, valid_loader,n_epochs=20)
+    model = ResNet(21,9)
+    model.load_state_dict(torch.load('C://Users//lbg//OneDrive - CSEM S.A//Bureau//RIO_Data_Challenge//New_Model//Weights//ResNet_May.pt'))
     conf_matrix(model,valid_loader)
     conf_matrix(model,train_loader)
 
